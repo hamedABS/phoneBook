@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Hamed-Abbaszadeh on 2/19/2018.
+ * Created by Hamed-Abbaszadeh -> 09385136659 on 2/19/2018.
  */
 public class UserDao extends AbstractEntityDAO {
 
@@ -25,7 +25,6 @@ public class UserDao extends AbstractEntityDAO {
         Transaction tx =null;
         try {
             tx = getTx();
-            ((User) o).setPassword(hashGenerator(((User) o).getPassword()));
             session.save((User)o);
             tx.commit();
             added = true;
@@ -39,7 +38,6 @@ public class UserDao extends AbstractEntityDAO {
             return added;
         }
     }
-
     public boolean delete(int id) {
         Session session = getSession();
         Transaction tx = null;
@@ -101,7 +99,7 @@ public class UserDao extends AbstractEntityDAO {
             if (user.getFirstName()!=null) user.setFirstName(((User) o).getFirstName());
             if (user.getLastName()!=null) user.setLastName(((User) o).getLastName());
             if (user.getUsername()!=null) user.setUsername(((User) o).getUsername());
-            if (user.getPassword()!=null) user.setPassword(hashGenerator(((User) o).getPassword()));
+            if (user.getPassword()!=null) user.setPassword((((User) o).getPassword()));
             if (user.getRole()!=null) user.setRole(((User) o).getRole());
             session.update(user);
             tx.commit();
@@ -113,23 +111,5 @@ public class UserDao extends AbstractEntityDAO {
         }
         return updated;
     }
-
-    public String hashGenerator(String password)
-    {
-        String myHash = null;
-        try
-        {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(password.getBytes());
-            byte[] digest = md.digest();
-            myHash = DatatypeConverter.printHexBinary(digest);
-        } catch (NoSuchAlgorithmException e)
-        {
-            e.printStackTrace();
-        }
-        return new String(myHash);
-    }
-
-
 
 }

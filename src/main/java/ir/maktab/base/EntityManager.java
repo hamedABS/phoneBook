@@ -3,14 +3,14 @@ package ir.maktab.base;
 import java.util.List;
 
 /**
- * Created by Hamed-Abbaszadeh on 2/19/2018.
+ * Created by Hamed-Abbaszadeh -> 09385136659 on 2/19/2018.
  */
 public interface EntityManager<E> {
 
     EntityDAO getDao();
-    void add(E e);
-    void delete(E e);
+    boolean add(E e);
+    boolean delete(int id);
     E getByid(int id);
     List<E> getAll();
-    void update(E e);
+    boolean update(E e);
 }

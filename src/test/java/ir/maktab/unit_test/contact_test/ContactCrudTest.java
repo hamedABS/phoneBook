@@ -1,14 +1,11 @@
 package ir.maktab.unit_test.contact_test;
 
-import ir.maktab.base.AbstractEntityDAO;
-import ir.maktab.model.contact.dao.ContactDao;
 import ir.maktab.model.contact.Contact;
+import ir.maktab.model.contact.dao.ContactDao;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.util.Iterator;
 import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -17,14 +14,15 @@ import static org.junit.Assert.assertTrue;
  */
 public class ContactCrudTest {
     private ContactDao contactDao;
+
     @Before
     public void start(){
         contactDao = new ContactDao();
     }
     @Test
     public void add(){
-        Contact contact = new Contact("Qolam","Rahmani",
-                "Qolam.rahmani@gmial.com","0217555878","093855666");
+        Contact contact = new Contact("Hamed","Abbaszadeh",
+                "hamed.abbaszadeh76@gmail.com","02155864078","09385133659");
         assertTrue(contactDao.add(contact));
     }
 

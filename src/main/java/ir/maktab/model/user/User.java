@@ -1,9 +1,12 @@
 package ir.maktab.model.user;
 
 import ir.maktab.model.role.Role;
+import javax.xml.bind.DatatypeConverter;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
- * Created by Hamed-Abbaszadeh on 2/19/2018.
+ * Created by Hamed-Abbaszadeh -> 09385136659 on 2/19/2018.
  */
 public class User {
 
@@ -19,7 +22,7 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
-        this.password = password;
+        this.password = hashGenerator(password);
         this.role = role;
     }
 
@@ -81,5 +84,23 @@ public class User {
                 ", password='" + password + '\'' +
                 ", role=" + role +
                 '}';
+    }
+
+    public static String hashGenerator(String password)
+    {
+        String myHash = null;
+        try
+        {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(password.getBytes());
+            byte[] digest = md.digest();
+            System.out.println("digest=  "+digest);
+            myHash = DatatypeConverter.printHexBinary(digest);
+        } catch (NoSuchAlgorithmException e)
+        {
+            e.printStackTrace();
+        }
+        System.out.println("return hash= " + myHash);
+        return myHash;
     }
 }

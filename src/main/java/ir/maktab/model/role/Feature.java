@@ -1,7 +1,7 @@
 package ir.maktab.model.role;
 
 /**
- * Created by Hamed-Abbaszadeh on 2/19/2018.
+ * Created by Hamed-Abbaszadeh -> 09385136659 on 2/19/2018.
  */
 public class Feature {
     private String name;
