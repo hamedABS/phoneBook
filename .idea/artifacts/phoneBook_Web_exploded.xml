@@ -60,6 +60,7 @@
           <element id="library" level="project" name="Maven: org.glassfish.hk2:hk2-locator:2.5.0-b36" />
           <element id="library" level="project" name="Maven: org.glassfish.jersey.bundles:jaxrs-ri:2.21" />
           <element id="library" level="project" name="Maven: org.glassfish.jersey.containers:jersey-container-servlet:2.21" />
+          <element id="library" level="project" name="Maven: log4j:log4j:1.2.17" />
         </element>
       </element>
     </root>

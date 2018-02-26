@@ -1,5 +1,6 @@
 package ir.maktab.view;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -19,11 +20,11 @@ import java.util.Vector;
 
 public class ContactPage extends javax.swing.JPanel {
 
-    private DefaultTableModel dtm = new DefaultTableModel();
-    public ContactPage() {
-        initialTable();
+    String serverIp ;
+    public ContactPage(String serverIp) {
+        this.serverIp = serverIp;
         initComponents();
-        table.setModel(dtm);
+        refreshTable();
     }
 
     @SuppressWarnings("unchecked")
@@ -121,26 +122,83 @@ public class ContactPage extends javax.swing.JPanel {
     }// </editor-fold>
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        JFrame addFrame = new JFrame();
+        addFrame.add(new AddPage(serverIp));
+        addFrame.setVisible(true);
+        addFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        addFrame.setSize(380,250);
     }
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        int row = table.getSelectedRow();
+        System.out.println(row);
+        int column =0;
+        System.out.println(table.getModel().getValueAt(row,column));
+        System.out.println(table.getModel().getValueAt(row,1));
+
+        int id ;
+        id = (int) table.getModel().getValueAt(row,column);
+        Client client = Client.create();
+        WebResource webResource = client.resource(String.format("http://%s:8080/api/Contact/delete/%d",serverIp,id));
+        ClientResponse response = webResource.type("application/json").get(ClientResponse.class);
+
+        if(response.getStatus()==200){
+            JOptionPane.showMessageDialog(this, "Contact Deleted",
+                    "Deleting Message",JOptionPane.INFORMATION_MESSAGE);
+        }
+        else if(response.getStatus()==201){
+            JOptionPane.showMessageDialog(this, "Request Send but not Deleted!",
+                    "Deleting Message",JOptionPane.INFORMATION_MESSAGE);
+        }
+        else{
+            JOptionPane.showMessageDialog(this, String.format("ERROR Code: %d",response.getStatus()),
+                    "Deleting Message",JOptionPane.ERROR_MESSAGE);
+        }
+
     }
 
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        int row = table.getSelectedRow();
+        Vector rowContent = (Vector) ((DefaultTableModel)table.getModel()).getDataVector().elementAt(row);
+        Contact contact = new Contact((String)rowContent.get(1),(String)rowContent.get(2),
+                (String)rowContent.get(3),(String)rowContent.get(4),(String)rowContent.get(5));
+        contact.setId((int) rowContent.get(0));
+
+        Client client = Client.create();
+        WebResource webResource = client.resource(String.format("http://%s:8080/api/Contact/update",serverIp));
+
+        ObjectMapper mapper = new ObjectMapper();
+        String json ;
+
+        try{
+            json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(contact);
+            ClientResponse response = webResource.type("application/json").post(ClientResponse.class,json);
+            if(response.getStatus()==200){
+                JOptionPane.showMessageDialog(this, "Contact Updated",
+                        "Editing Message",JOptionPane.INFORMATION_MESSAGE);
+            }
+            else if(response.getStatus()==201){
+                JOptionPane.showMessageDialog(this, "Request Send but not Updated!",
+                        "Editing Message",JOptionPane.INFORMATION_MESSAGE);
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Bad Request or internal server Error",
+                        "Editing Message",JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
     }
 
     private void refreshBtnActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        refreshTable();
     }
 
     private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
 
-    public void initialTable(){
+    public void refreshTable(){
         List contacts = null;
         Client client = Client.create();
         WebResource resource = client.resource(String.format("http://%s:8080/api/Contact/getAll" , "localhost"));
@@ -158,8 +216,6 @@ public class ContactPage extends javax.swing.JPanel {
             e.printStackTrace();
         }
 
-        System.out.println(contacts.size());
-        System.out.println(contacts.get(0));
         Iterator iterator = contacts.iterator();
         Vector ides = new Vector();
         Vector firstNames = new Vector();
@@ -178,12 +234,14 @@ public class ContactPage extends javax.swing.JPanel {
             mobiles.add(contact.getMobile());
             homes.add(contact.getHome());
         }
+        DefaultTableModel dtm = new DefaultTableModel();
         dtm.addColumn("ID",ides);
         dtm.addColumn("FirstName",firstNames);
         dtm.addColumn("LastName",lastNames);
         dtm.addColumn("Email",emails);
         dtm.addColumn("Mobile",mobiles);
         dtm.addColumn("Home",homes);
+        table.setModel(dtm);
 
     }
 

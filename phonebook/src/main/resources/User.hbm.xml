@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="ir.maktab.model.user.User" table="user">
+        <id name="id" column="id" type="int">
+            <generator class="native"/>
+        </id>
+
+        <property name="firstName" column="firstName" type="string"/>
+        <property name="lastName" column="lastName" type="string"/>
+        <property name="password" column="password" type="string"/>
+        <property name="username" column="username" type="string" unique="true"/>
+        <many-to-one name="role" column="role" class="ir.maktab.model.role.Role" not-null="true"/>
+    </class>
+</hibernate-mapping>

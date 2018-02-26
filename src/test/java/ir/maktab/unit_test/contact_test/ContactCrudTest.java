@@ -46,6 +46,7 @@ public class ContactCrudTest {
         contact2.setId(6);
         assertEquals(contact , contact2);
 
+
     }
 
     @Test

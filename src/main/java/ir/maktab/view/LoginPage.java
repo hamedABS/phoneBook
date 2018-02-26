@@ -17,7 +17,10 @@ import javax.swing.*;
 public class LoginPage extends javax.swing.JPanel {
 
 
-    public LoginPage() {
+    JFrame frame ;
+
+    public LoginPage(JFrame frame) {
+        this.frame =frame;
         initComponents();
     }
 
@@ -34,11 +37,11 @@ public class LoginPage extends javax.swing.JPanel {
         passwordTxt = new javax.swing.JPasswordField();
         loginBtn = new javax.swing.JButton();
         lbl1.setText("Server Ip:");
-        userNameTxt.setText("Hamed");
+        userNameTxt.setText("hamed");
         lbl3.setText("Password :");
         lbl2.setText("UserName :");
         serverIp.setText("127.0.0.1");
-        passwordTxt.setText("passwordTxt");
+        passwordTxt.setText("1234");
         loginBtn.setText("Login");
 
         loginBtn.addActionListener(evt -> loginBtnActionPerformed(evt));
@@ -90,33 +93,31 @@ public class LoginPage extends javax.swing.JPanel {
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {
         UserAuthDTO userAuthDTO = new UserAuthDTO(userNameTxt.getText() , passwordTxt.getText());
-        System.out.println(userAuthDTO.getUsername());
-        System.out.println(userAuthDTO.getPassword());
         String ip = serverIp.getText();
         Client client = Client.create();
-        WebResource webResource =  client.resource("http://localhost:8080/api/login/authenticate" );
+        String uri = String.format("http://%s:8080/api/login/authenticate",ip);
+        WebResource webResource =  client.resource(uri);
         ObjectMapper mapper = new ObjectMapper();
         String json= null;
         try {
             json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(userAuthDTO);
-            System.out.println(json);
             ClientResponse response = webResource.type("application/json").post(ClientResponse.class,json);
-            System.out.println(response.getStatus());
             if (response.getStatus() != 200)
                 JOptionPane.showMessageDialog(this,String.format("ERROR Code: %d", response.getStatus()));
 
             else {
+
                 JFrame contactFrame = new JFrame("Contacts Page");
-                contactFrame.setSize(460 , 390);
+                frame.setVisible(false);
+                contactFrame.setSize(460 ,410 );
                 contactFrame.setResizable(false);
-                contactFrame.add(new ContactPage());
+                contactFrame.add(new ContactPage(ip));
                 contactFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 contactFrame.setVisible(true);
             }
         } catch (JsonProcessingException | NullPointerException e) {
             e.printStackTrace();
         }
-
     }
 
     // Variables declaration - do not modify
@@ -133,8 +134,8 @@ public class LoginPage extends javax.swing.JPanel {
         JFrame loginFrame = new JFrame("LoginPage");
         loginFrame.setSize(370 , 350);
         loginFrame.setResizable(false);
-        loginFrame.add(new LoginPage());
+        loginFrame.add(new LoginPage(loginFrame));
         loginFrame.setVisible(true);
-        loginFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        loginFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 }

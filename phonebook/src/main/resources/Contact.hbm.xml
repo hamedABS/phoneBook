@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="ir.maktab.model.contact.Contact" table="contact">
+        <id name="id" column="id" type="int">
+            <generator class="native"/>
+        </id>
+        <property name="firstName" type="string" column="firstName"/>
+        <property name="lastName" type="string" column="lastName"/>
+        <property name="email" type="string" column="email" unique="true"/>
+        <property name="mobile" type="string" column="mobile" unique="true"/>
+        <property name="home" type="string" column="home" unique="true"/>
+
+    </class>
+</hibernate-mapping>
