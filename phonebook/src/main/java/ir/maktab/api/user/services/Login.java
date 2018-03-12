@@ -4,7 +4,6 @@ import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import ir.maktab.api.user.dto.UserAuthDTO;
-import ir.maktab.model.MyLogger;
 import ir.maktab.model.user.manager.UserManager;
 
 import javax.ws.rs.Consumes;

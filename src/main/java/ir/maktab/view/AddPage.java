@@ -15,8 +15,10 @@ import javax.swing.*;
 public class AddPage extends javax.swing.JPanel {
 
     String serverIp;
-    public AddPage(String serverIp) {
+    String token;
+    public AddPage(String serverIp,String token) {
         this.serverIp = serverIp;
+        this.token = token;
         initComponents();
     }
 
@@ -125,7 +127,7 @@ public class AddPage extends javax.swing.JPanel {
             Contact contact = new Contact(firstNameTxt.getText(), lastNameTxt.getText()
                     ,emailTxt.getText(),mobileTxt.getText(),homeTxt.getText());
             json =mapper.writerWithDefaultPrettyPrinter().writeValueAsString(contact);
-            ClientResponse response =webResource.type("application/json").post(ClientResponse.class,json);
+            ClientResponse response =webResource.type("application/json").header("Authorization",token).post(ClientResponse.class,json);
             if(response.getStatus()==201){
                 JOptionPane.showMessageDialog(this, "Contact Added",
                         "Adding Message",JOptionPane.INFORMATION_MESSAGE);

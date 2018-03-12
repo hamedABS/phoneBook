@@ -1,5 +1,4 @@
 package ir.maktab.api.user.services;
-import ir.maktab.model.MyLogger;
 import ir.maktab.model.user.User;
 import ir.maktab.model.user.manager.UserManager;
 import javax.ws.rs.*;

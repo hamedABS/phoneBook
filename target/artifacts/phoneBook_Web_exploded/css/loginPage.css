@@ -1,0 +1,147 @@
+body {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment:  fixed;
+    margin:0;
+    padding:0;
+    background-size:cover;
+}
+@font-face{
+    font-family: iran;
+    src: url(../fonts/IRANSansWeb.woff) format('woff') ;
+}
+@font-face{
+    font-family: iran-black;
+    src: url(../fonts/IRANSansWeb_Black.woff) format('woff') ;
+}
+@font-face{
+    font-family: iran-light;
+    src: url(../fonts/IRANSansWeb_Light.woff) format('woff') ;
+}
+@font-face{
+    font-family: iran-medium;
+    src: url(../fonts/IRANSansWeb_Medium.woff) format('woff') ;
+}
+@font-face{
+    font-family: iran-bold;
+    src: url(../fonts/IRANSansWeb_Bold.woff) format('woff') ;
+}
+* :focus{
+    outline: none;
+}
+*{
+    font-family: iran;
+    direction: rtl;
+}
+.content-div {
+    position: relative;
+    width: 390px;
+    height: 35px;
+    right: 20px;
+    border: none;
+    background-color: #00000000;
+    border-bottom: 1px solid white;
+}
+.login{
+    width: 428px;
+    height: 300px;
+    background-color: #000000a1;
+    position: fixed;
+    top: calc(50% - 150px );
+    right: calc(50% - 224px );
+    direction: rtl;
+    transition: 300ms;
+}
+.login-bar {
+    position: absolute;
+    height: 55px;
+    width:100%;
+    background-color: #00000000;
+    top:10px;
+}
+#bar-lbl {
+    color: white;
+    size: 20px;
+}
+#register-div{
+    right: 55px !important;
+}
+#login-div , #register-div {
+    position: absolute;
+    right:10px;
+    top: 3px;
+    padding: 5px 5px;
+}
+
+.lbl{
+    color: #f5f5f5ad;
+    position: absolute;
+    font-size:16px;
+    top:9px;
+    right:8px;
+    transition: 300ms;
+}
+.input{
+    position: relative;
+    width: 390px;
+    height: 30px;
+    right: 0px;
+    border:none;
+    background-color: #00000000;
+    font-size: 16px;
+    color: whitesmoke;
+}
+.login-btn{
+    position: absolute;
+    right: 20px;
+    width: 383px;
+    height: 40px;
+    background-color: #034f8edb;
+    font-size: 20px;
+    border: none;
+    size: 20px;
+    color: white;
+}
+#forget-lbl
+{
+    position: absolute;
+    right: 133px;
+    width: 383px;
+    color: #f5f5f5ad;
+    bottom: 17px;
+    font-size: 15px;
+}
+#forget-lbl:hover
+{
+    text-decoration: underline;
+}
+#login-btn:hover{
+    background-color: rgba(46, 64, 245, 0.45);
+}
+#line{
+    position: relative;
+    right:-10px;
+    width:50px ;
+    height:2px;
+    background-color: white;
+    transition: 400ms;
+}
+#reg-spc{
+    position: relative;
+    bottom: 10px;
+    position: fixed;
+}
+.error{
+    width: 240px;
+    height: 27px;
+    border-radius: 10px;
+    position: relative;
+    top: calc(46% - 48.5px);
+    right: calc(50% - 120px);
+    background: darkred;
+    display: none;
+}
+.error>p{
+    position: relative;
+    right:8px;
+}

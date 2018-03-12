@@ -16,6 +16,6 @@ public interface EntityDAO<E> {
     List<E> getAll();
     boolean update(E e);
     Session getSession();
-    Transaction getTx();
-    void closeSession();
+    Transaction getTx(Session session);
+    void closeSession(Session session);
 }

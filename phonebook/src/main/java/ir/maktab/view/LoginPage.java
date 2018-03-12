@@ -39,7 +39,7 @@ public class LoginPage extends javax.swing.JPanel {
         lbl2.setText("UserName :");
         serverIp.setText("127.0.0.1");
         passwordTxt.setText("passwordTxt");
-        loginBtn.setText("Login");
+        loginBtn.setText("LoginRegister");
 
         loginBtn.addActionListener(evt -> loginBtnActionPerformed(evt));
 

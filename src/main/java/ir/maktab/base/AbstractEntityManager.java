@@ -28,4 +28,5 @@ public abstract class AbstractEntityManager<E> implements EntityManager {
     public boolean update(Object o) {
         return entityDAO.update(o);
     }
+
 }

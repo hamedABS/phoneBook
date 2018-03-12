@@ -1,6 +1,4 @@
 package ir.maktab.base;
-
-import ir.maktab.model.role.Role;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,8 +10,8 @@ import org.hibernate.cfg.Configuration;
  * Created by Hamed-Abbaszadeh on 2/19/2018.
  */
 public abstract class AbstractEntityDAO<E> implements EntityDAO{
-    private Session session ;
     private SessionFactory factory ;
+
     public AbstractEntityDAO(){
         factory = new Configuration().configure().buildSessionFactory();
     }
@@ -23,7 +21,7 @@ public abstract class AbstractEntityDAO<E> implements EntityDAO{
         boolean added = false;
         Transaction tx = null;
         try {
-            tx = getTx();
+            tx = getTx(session);
             session.save(o) ;
             tx.commit();
             added = true;
@@ -33,12 +31,12 @@ public abstract class AbstractEntityDAO<E> implements EntityDAO{
             e.printStackTrace();
         }
         finally {
-            closeSession();
+            closeSession(session);
             return added;
         }
     }
 
-    public Transaction getTx() {
+    public Transaction getTx(Session session) {
         if(session!=null) return session.beginTransaction();
         else{
             session = factory.openSession();
@@ -47,11 +45,12 @@ public abstract class AbstractEntityDAO<E> implements EntityDAO{
     }
 
     public Session getSession() {
-        session = factory.openSession();
+        Session session = factory.openSession();
         return session;
     }
 
-    public void closeSession() {
+    public void closeSession(Session session) {
         session.close();
     }
+
 }

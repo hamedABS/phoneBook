@@ -42,7 +42,7 @@ public class LoginPage extends javax.swing.JPanel {
         lbl2.setText("UserName :");
         serverIp.setText("127.0.0.1");
         passwordTxt.setText("1234");
-        loginBtn.setText("Login");
+        loginBtn.setText("LoginRegister");
 
         loginBtn.addActionListener(evt -> loginBtnActionPerformed(evt));
 
@@ -95,7 +95,7 @@ public class LoginPage extends javax.swing.JPanel {
         UserAuthDTO userAuthDTO = new UserAuthDTO(userNameTxt.getText() , passwordTxt.getText());
         String ip = serverIp.getText();
         Client client = Client.create();
-        String uri = String.format("http://%s:8080/api/login/authenticate",ip);
+        String uri = String.format("http://%s:8080/api/loginRegister/authenticate",ip);
         WebResource webResource =  client.resource(uri);
         ObjectMapper mapper = new ObjectMapper();
         String json= null;
@@ -106,12 +106,12 @@ public class LoginPage extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this,String.format("ERROR Code: %d", response.getStatus()));
 
             else {
-
+                String token = response.getEntity(String.class);
                 JFrame contactFrame = new JFrame("Contacts Page");
                 frame.setVisible(false);
                 contactFrame.setSize(460 ,410 );
                 contactFrame.setResizable(false);
-                contactFrame.add(new ContactPage(ip));
+                contactFrame.add(new ContactPage(ip , token));
                 contactFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 contactFrame.setVisible(true);
             }

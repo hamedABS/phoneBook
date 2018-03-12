@@ -20,7 +20,6 @@ public class UserManager extends AbstractEntityManager{
     public EntityDAO getDao() {
         return new UserDao();
     }
-
     public ArrayList<UserAuthDTO> getUserAuthDTO(){
         ArrayList<UserAuthDTO> result  = new ArrayList();
         UserAuthDTO userDTO ;
@@ -36,5 +35,20 @@ public class UserManager extends AbstractEntityManager{
             result.add(userDTO);
         }
         return result;
+    }
+    public boolean isSuperUser(String userName){
+        return ((UserDao)entityDAO).isSuperUser(userName);
+    }
+
+    public  boolean isAdmin(String userName){
+       return  ((UserDao)entityDAO).isAdmin(userName);
+    }
+
+    public boolean isUser(String userName){
+        return  ((UserDao)entityDAO).isUser(userName);
+    }
+
+    public boolean isGuest(String userName){
+        return  ((UserDao)entityDAO).isGuest(userName);
     }
 }

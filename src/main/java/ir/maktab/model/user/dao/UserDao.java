@@ -2,15 +2,8 @@ package ir.maktab.model.user.dao;
 
 import ir.maktab.base.AbstractEntityDAO;
 import ir.maktab.model.user.User;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.hibernate.*;
 
-import javax.jws.soap.SOAPBinding;
-import javax.xml.bind.DatatypeConverter;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,32 +11,12 @@ import java.util.List;
  */
 public class UserDao extends AbstractEntityDAO {
 
-    public boolean add(Object o) {
-        o = (User)o;
-        Session session = getSession();
-        boolean added = false;
-        Transaction tx =null;
-        try {
-            tx = getTx();
-            session.save((User)o);
-            tx.commit();
-            added = true;
-        }
-        catch (Exception e){
-            if (tx!=null)tx.rollback();
-            e.printStackTrace();
-        }
-        finally {
-            closeSession();
-            return added;
-        }
-    }
     public boolean delete(int id) {
         Session session = getSession();
         Transaction tx = null;
         boolean deleted = false;
         try {
-            tx = getTx();
+            tx = getTx(session);
             User user = (User) session.get(User.class , id);
             session.delete(user);
             tx.commit();
@@ -53,7 +26,10 @@ public class UserDao extends AbstractEntityDAO {
             if(tx!=null) tx.rollback();
             e.printStackTrace();
         }
-        return deleted;
+        finally {
+            closeSession(session);
+            return deleted;
+        }
     }
 
     public Object getById(int id) {
@@ -61,7 +37,7 @@ public class UserDao extends AbstractEntityDAO {
         Transaction tx = null;
         User user = null;
         try {
-            tx = getTx();
+            tx = getTx(session);
             user = (User) session.get(User.class , id);
             session.get(User.class , id);
             tx.commit();
@@ -70,7 +46,10 @@ public class UserDao extends AbstractEntityDAO {
             if(tx!=null) tx.rollback();
             e.printStackTrace();
         }
-        return user;
+        finally {
+            closeSession(session);
+            return user;
+        }
     }
 
     public List getAll() {
@@ -78,8 +57,9 @@ public class UserDao extends AbstractEntityDAO {
         List list =null;
         Transaction tx = null;
         try {
-            tx =getTx();
-            list=session.createQuery("from User user").list();
+            tx =getTx(session);
+            list= session.createCriteria(User.class).list();
+            //list=session.createQuery("from User user").list();
             tx.commit();
         }
         catch (HibernateException e){
@@ -94,7 +74,7 @@ public class UserDao extends AbstractEntityDAO {
         Transaction tx = null;
         boolean updated = false;
         try {
-            tx = getTx();
+            tx = getTx(session);
             User user = (User) session.get(User.class,((User)o).getId());
             if (user.getFirstName()!=null) user.setFirstName(((User) o).getFirstName());
             if (user.getLastName()!=null) user.setLastName(((User) o).getLastName());
@@ -112,4 +92,101 @@ public class UserDao extends AbstractEntityDAO {
         return updated;
     }
 
+    public boolean isSuperUser(String userName){
+        Session session = getSession();
+        Transaction tx =null;
+        boolean isSuperUser =false;
+        try {
+            tx = getTx(session);
+            String hql="from User where username= :username";
+            Query query = session.createQuery(hql).setParameter("username",userName);
+            User user  = (User) query.list().get(0);
+            System.out.println(user);
+            System.out.println(user.getRole().getName());
+            if(user.getRole().getName().equals("SuperUser")) isSuperUser=true;
+            tx.commit();
+        }
+        catch (Exception e ){
+            if(tx!=null) tx.rollback();
+            e.printStackTrace();
+        }
+        finally {
+            closeSession(session);
+            System.out.println("isSuperUser " + isSuperUser );
+            return isSuperUser;
+        }
+    }
+
+    public  boolean isAdmin(String userName){
+        Session session = getSession();
+        Transaction tx=null;
+        boolean isAdmin = false;
+
+        try {
+            tx=getTx(session);
+            String hql="from User where username=:username";
+            Query query = session.createQuery(hql);
+            query.setParameter("username",userName);
+            User user  = (User) query.list().get(0);
+            if(user.getRole().getName().equals("Admin")) isAdmin = true;
+            tx.commit();
+        }
+        catch (HibernateException e){
+            if(tx!=null) tx.rollback();
+            e.printStackTrace();
+        }
+        finally {
+            closeSession(session);
+            System.out.println("isAdmin: "+isAdmin);
+            return isAdmin;
+        }
+    }
+
+    public boolean isUser(String userName){
+        Session session = getSession();
+        Transaction tx =null;
+        boolean isUser =false;
+
+        try {
+            tx =getTx(session);
+            String hql="from User where username=:username";
+            Query query = session.createQuery(hql);
+            query.setParameter("username",userName);
+            User user  = (User) query.list().get(0);
+            if (user.getRole().getName().equals("User")) isUser = true;
+            tx.commit();
+        }
+        catch (HibernateException e){
+            if(tx!=null) tx.rollback();
+            e.printStackTrace();
+        }
+        finally {
+            closeSession(session);
+            return isUser;
+        }
+    }
+
+    public boolean isGuest(String userName){
+        Session session = getSession();
+        Transaction tx =null;
+        boolean isGuest =false;
+
+        try {
+            tx = getTx(session);
+            String hql="from User where username=:username";
+            Query query = session.createQuery(hql);
+            query.setParameter("username",userName);
+            User user  = (User) query.list().get(0);
+            if (user.getRole().getName().equals("Guest")) isGuest = true;
+            tx.commit();
+        }
+        catch(HibernateException e){
+            if(tx!=null) tx.rollback();
+            e.printStackTrace();
+        }
+        finally {
+            closeSession(session);
+            return isGuest;
+        }
+    }
 }

@@ -5,8 +5,6 @@ import ir.maktab.model.role.Role;
 import ir.maktab.model.role.dao.RoleDAO;
 import ir.maktab.model.user.User;
 import ir.maktab.model.user.dao.UserDao;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,8 +20,6 @@ public class UserCrudTest {
 
     @Before
     public void start() {
-        PropertyConfigurator.configure("log4j.properties");
-        //PropertyConfigurator.configure("log4j.properties");
         userDao = new UserDao();
         roleDAO = new RoleDAO();
     }
@@ -54,9 +50,6 @@ public class UserCrudTest {
     @Test
     public void getById() {
         User user = (User) userDao.getById(15);
-        Logger logger = Logger.getRootLogger();
-        logger.fatal("55555555555555");
-        logger.info("First Logger in Hibernate");
         System.out.println(user);
     }
 

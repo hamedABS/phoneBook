@@ -21,7 +21,7 @@ public class RoleDAO extends AbstractEntityDAO{
         Role role = null;
         Transaction tx =null;
         try {
-            tx = getTx();
+            tx = getTx(session);
             role = (Role) session.get(Role.class , id);
             tx.commit();
         }
@@ -31,7 +31,7 @@ public class RoleDAO extends AbstractEntityDAO{
         }
         finally {
             System.out.println(role.getFeatures().toString());
-            closeSession();
+            closeSession(session);
             return role;
         }
     }
@@ -40,7 +40,7 @@ public class RoleDAO extends AbstractEntityDAO{
         Feature feature = null;
         Transaction tx =null;
         try {
-            tx = getTx();
+            tx = getTx(session);
             feature = (Feature) session.get(Feature.class , id);
             tx.commit();
         }
@@ -49,7 +49,7 @@ public class RoleDAO extends AbstractEntityDAO{
             e.printStackTrace();
         }
         finally {
-            closeSession();
+            closeSession(session);
             return feature;
         }
     }
@@ -59,7 +59,7 @@ public class RoleDAO extends AbstractEntityDAO{
         List roles = new ArrayList();
         Transaction tx = null;
         try {
-            tx =getTx();
+            tx =getTx(session);
             roles =session.createQuery("from Role r").list();
             tx.commit();
         }
@@ -68,7 +68,7 @@ public class RoleDAO extends AbstractEntityDAO{
             e.printStackTrace();
         }
         finally {
-            closeSession();
+            closeSession(session);
             return roles;
         }
     }

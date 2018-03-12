@@ -1,0 +1,54 @@
+@font-face{
+    font-family: iran;
+    src: url(../fonts/IRANSansWeb.woff) format('woff') ;
+}
+body{
+    font-family: "iran";
+    font-size:12px;
+    background-color: wheat;
+    direction: rtl;
+}
+*{
+    font-family: "iran";
+}
+table{
+    border: 1px solid black;
+    text-align: center;
+    border: 1px solid black;
+}
+tr,td,th{
+    overflow: hidden;
+    border:1px solid black;
+    text-align: center;
+}
+.card{
+    min-height: 200px;
+    width:300px;
+}
+.myTable{
+    border: 2px solid darkblue;
+    text-align: center;
+}
+.myTable td ,.myTable th{
+    width:100px;
+    max-width:100px ;
+    height: 30px;
+    max-height: 30px;
+    overflow: auto;
+}
+.myTable th{
+    background-color: #2a8ee1;
+}
+.icon{
+    position: relative;
+    right:0px;
+    top:0px;
+    height: 20px;
+    width:20px;
+}
+.icon:hover{
+    cursor: pointer;
+}
+.edit-icon{
+    right:10px;
+}

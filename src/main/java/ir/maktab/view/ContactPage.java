@@ -21,8 +21,10 @@ import java.util.Vector;
 public class ContactPage extends javax.swing.JPanel {
 
     String serverIp ;
-    public ContactPage(String serverIp) {
+    String token;
+    public ContactPage(String serverIp,String token) {
         this.serverIp = serverIp;
+        this.token = token;
         initComponents();
         refreshTable();
     }
@@ -123,7 +125,7 @@ public class ContactPage extends javax.swing.JPanel {
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {
         JFrame addFrame = new JFrame();
-        addFrame.add(new AddPage(serverIp));
+        addFrame.add(new AddPage(serverIp,token));
         addFrame.setVisible(true);
         addFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         addFrame.setSize(380,250);
@@ -140,8 +142,7 @@ public class ContactPage extends javax.swing.JPanel {
         id = (int) table.getModel().getValueAt(row,column);
         Client client = Client.create();
         WebResource webResource = client.resource(String.format("http://%s:8080/api/Contact/delete/%d",serverIp,id));
-        ClientResponse response = webResource.type("application/json").get(ClientResponse.class);
-
+        ClientResponse response = webResource.type("application/json").header("Authorization",token).get(ClientResponse.class);
         if(response.getStatus()==200){
             JOptionPane.showMessageDialog(this, "Contact Deleted",
                     "Deleting Message",JOptionPane.INFORMATION_MESSAGE);
@@ -172,7 +173,7 @@ public class ContactPage extends javax.swing.JPanel {
 
         try{
             json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(contact);
-            ClientResponse response = webResource.type("application/json").post(ClientResponse.class,json);
+            ClientResponse response = webResource.type("application/json").header("Authorization",token).post(ClientResponse.class,json);
             if(response.getStatus()==200){
                 JOptionPane.showMessageDialog(this, "Contact Updated",
                         "Editing Message",JOptionPane.INFORMATION_MESSAGE);
@@ -202,7 +203,7 @@ public class ContactPage extends javax.swing.JPanel {
         List contacts = null;
         Client client = Client.create();
         WebResource resource = client.resource(String.format("http://%s:8080/api/Contact/getAll" , "localhost"));
-        ClientResponse response = resource.accept("application/json").post(ClientResponse.class);
+        ClientResponse response = resource.accept("application/json").header("Authorization",token).post(ClientResponse.class);
         if (response.getStatus() != 200) {
             JOptionPane.showMessageDialog(this , "Failed : HTTP error code : "
                     + response.getStatus());

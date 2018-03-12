@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="css/loginPage.css" rel="stylesheet" type="text/css">
+    <script src="jquery-3.2.1.min.js"></script>
+    <script src="js/loginjs.js">
+    </script>
+    <script src="js/loginRequest.js"></script>
+</head>
+<body background="1.jpg">
+<div class="login">
+    <div class="login-bar">
+        <div id="login-div">
+            <label id="bar-lbl">ورود</label>
+            <div id="line"></div>
+        </div>
+        <div id="register-div"><lable id="bar-lbl">ثبت نام</lable></div>
+    </div>
+    <div  class="content-div" id="1" style=" top :70px">
+        <input id="email" class="input" style=" top: 2px; bottom: 5px;" type="text">
+        <lable id="email-lbl" class="lbl" >نام کاربری</lable>
+    </div>
+    <div class="content-div" class="password"   style="top: 100px;">
+        <input id="password" class="input" style="top: 2px; bottom: 5px;" type="password">
+        <lable id="pass-lbl" class="lbl" >رمز</lable>
+    </div>
+    <div  class="content-div" id="reg-div" style="bottom: 5px; top: 130px; display:none; ">
+        <input type="password" id="rep-password" class="input" >
+        <lable class="lbl" id="rep-lbl" >تکرار رمز</lable>
+    </div>
+    <div class="content-div" id="first-name-div" style="top:160px;display: none;" >
+        <input  class="input" id="first-name" style=" top: 2px; bottom: 5px;" type="text">
+        <lable id="first-name-lbl" class="lbl" >نام</lable>
+    </div>
+    <div class="content-div" id="last-name-div" style="top:190px ;display: none;" >
+        <input  class="input" id="last-name" style=" top: 2px; bottom: 5px; " type="text">
+        <lable id="last-name-lbl" class="lbl" >نام خانوادگی</lable>
+    </div>
+    <input type="button" value="ورود" class="login-btn" id="login-btn" style="bottom: 50px;">
+    <input type="button" value="ثبت نام" class="login-btn" id="reg-btn"  style="bottom: 50px; display: none;">
+    <label id="forget-lbl">رمز خود را فراموش کرده ام!</label>
+    <div class="error">
+        <p>نام کاربری یا رمز عبور اشتباه است !</p>
+    </div>
+</div>
+</body>
+</html>

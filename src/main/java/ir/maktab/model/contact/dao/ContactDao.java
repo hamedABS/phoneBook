@@ -18,7 +18,7 @@ public class ContactDao extends AbstractEntityDAO {
         boolean deleted = false;
         Transaction tx = null;
         try {
-            tx = getTx();
+            tx = getTx(session);
             Contact contact = (Contact) session.get(Contact.class , id);
             session.delete(contact);
             tx.commit();
@@ -29,7 +29,7 @@ public class ContactDao extends AbstractEntityDAO {
             e.printStackTrace();
         }
         finally {
-            closeSession();
+            closeSession(session);
             return deleted;
         }
     }
@@ -39,7 +39,7 @@ public class ContactDao extends AbstractEntityDAO {
         Contact contact = null;
         Transaction tx =null;
         try {
-            tx = getTx();
+            tx = getTx(session);
             contact = (Contact) session.get(Contact.class, id);
             tx.commit();
         }
@@ -48,7 +48,7 @@ public class ContactDao extends AbstractEntityDAO {
             e.printStackTrace();
         }
         finally {
-            closeSession();
+            closeSession(session);
             return contact;
         }
     }
@@ -58,7 +58,7 @@ public class ContactDao extends AbstractEntityDAO {
         List contacts = new ArrayList();
         Transaction tx = null;
         try {
-            tx =getTx();
+            tx =getTx(session);
             contacts =session.createQuery("from Contact c").list();
             tx.commit();
         }
@@ -67,7 +67,7 @@ public class ContactDao extends AbstractEntityDAO {
             e.printStackTrace();
         }
         finally {
-            closeSession();
+            closeSession(session);
             return contacts;
         }
     }
@@ -77,7 +77,7 @@ public class ContactDao extends AbstractEntityDAO {
         boolean updated =false;
         Transaction tx = null;
         try {
-            tx = getTx();
+            tx = getTx(session);
             Contact contact = (Contact) session.get(o.getClass() , ((Contact) o).getId());
             if(((Contact)o).getEmail()!=null) contact.setEmail(((Contact) o).getEmail());
             if(((Contact) o).getFirstName()!=null) contact.setFirstName(((Contact) o).getFirstName());
@@ -93,7 +93,7 @@ public class ContactDao extends AbstractEntityDAO {
             e.printStackTrace();
         }
         finally {
-            closeSession();
+            closeSession(session);
             return updated;
         }
     }
