@@ -1,5 +1,6 @@
 package ir.maktab.model.user;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import ir.maktab.model.role.Role;
 import javax.xml.bind.DatatypeConverter;
 import java.security.MessageDigest;
@@ -15,6 +16,7 @@ public class User {
     private String lastName;
     private String username;
     private String password;
+    @JsonProperty
     private Role role ;
 
     public User(){}

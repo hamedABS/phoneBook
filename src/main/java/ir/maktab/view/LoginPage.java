@@ -8,6 +8,7 @@ import com.sun.jersey.api.client.WebResource;
 import ir.maktab.api.user.dto.UserAuthDTO;
 
 import javax.swing.*;
+import java.util.List;
 
 
 /**
@@ -107,11 +108,13 @@ public class LoginPage extends javax.swing.JPanel {
 
             else {
                 String token = response.getEntity(String.class);
+                List<String> roles = response.getHeaders().get("authentication");
+                String role = roles.get(0);
                 JFrame contactFrame = new JFrame("Contacts Page");
                 frame.setVisible(false);
                 contactFrame.setSize(460 ,410 );
                 contactFrame.setResizable(false);
-                contactFrame.add(new ContactPage(ip , token));
+                contactFrame.add(new ContactPage(ip , token,role));
                 contactFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 contactFrame.setVisible(true);
             }

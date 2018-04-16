@@ -17,18 +17,18 @@ $(function () {
                 if(role=="SuperUser"){
                     window.location.replace("../superUserPage.html?token="+token);
                 }
-                else if(role=="Admin") alert("Admin")
-                else if(role=="Guest") alert("Guest")
-                else if(role=="User") alert("User")
-                //window.location.replace("managerPage.html");
+                else if(role=="Admin") {
+                    window.location.replace("../AdminPage.html?token="+token)
+                }
+                else if(role=="Guest"){
+                    window.location.replace()
+                }
+                else if(role=="User") {
+                    window.location.replace()
+                }
             }
         }
     })
-    /*function parseJwt(token) {
-        var base64Url = token.split('.')[1];
-        var base64 = base64Url.replace('-', '+').replace('_', '/');
-        return JSON.parse(window.atob(base64));
-    };*/
 
 })
 

@@ -2,9 +2,7 @@ package ir.maktab.api.contact.service;
 import ir.maktab.api.filters.Level2Filter;
 import ir.maktab.api.filters.Level3Filter;
 import ir.maktab.model.contact.Contact;
-import ir.maktab.model.contact.dao.ContactDao;
 import ir.maktab.model.contact.manager.ContactManager;
-import org.apache.log4j.Logger;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -23,8 +21,7 @@ public class ContactServices {
     @Path("getAll")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllContacts(){
-        List<Contact> contacts;
-        contacts = contactManager.getAll();
+        List<Contact>contacts = contactManager.getAll();
         return Response.status(200).entity(contacts).build();
     }
 

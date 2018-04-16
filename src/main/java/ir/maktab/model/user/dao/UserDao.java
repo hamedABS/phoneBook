@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * Created by Hamed-Abbaszadeh -> 09385136659 on 2/19/2018.
  */
+
 public class UserDao extends AbstractEntityDAO {
 
     public boolean delete(int id) {
@@ -59,7 +60,6 @@ public class UserDao extends AbstractEntityDAO {
         try {
             tx =getTx(session);
             list= session.createCriteria(User.class).list();
-            //list=session.createQuery("from User user").list();
             tx.commit();
         }
         catch (HibernateException e){

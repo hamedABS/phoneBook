@@ -74,18 +74,19 @@ public class ContactDao extends AbstractEntityDAO {
 
     public boolean update(Object o) {
         Session session = getSession();
+        Contact contact =null;
         boolean updated =false;
         Transaction tx = null;
         try {
             tx = getTx(session);
-            Contact contact = (Contact) session.get(o.getClass() , ((Contact) o).getId());
+            contact = (Contact) session.get(o.getClass() , ((Contact) o).getId());
             if(((Contact)o).getEmail()!=null) contact.setEmail(((Contact) o).getEmail());
             if(((Contact) o).getFirstName()!=null) contact.setFirstName(((Contact) o).getFirstName());
             if(((Contact) o).getLastName()!=null) contact.setLastName(((Contact) o).getLastName());
             if(((Contact) o).getMobile()!=null) contact.setMobile(((Contact) o).getMobile());
             if(((Contact) o).getHome()!=null) contact.setHome(((Contact) o).getHome());
             session.update(contact);
-            updated = true;
+            updated =true;
             tx.commit();
         }
         catch (HibernateException e){

@@ -1,22 +1,25 @@
 package ir.maktab.api.user.services;
-
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtBuilder;
+import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import ir.maktab.api.user.dto.UserAuthDTO;
 import ir.maktab.model.user.User;
 import ir.maktab.model.user.manager.UserManager;
+import org.apache.log4j.Logger;
+
+import javax.crypto.spec.SecretKeySpec;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
-import java.util.Iterator;
-import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 
 /**
  * Created by Hamed-Abbaszadeh on 2/21/2018.
@@ -25,7 +28,7 @@ import java.util.Date;
 public class LoginRegister {
 
     UserManager userManager =new UserManager();
-
+    Logger logger = Logger.getRootLogger();
     @POST
     @Path("authenticate")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -33,12 +36,14 @@ public class LoginRegister {
     public Response authenticate(UserAuthDTO userAuthDTO) {
         ArrayList users = (ArrayList) userManager.getAll();
         Iterator iterator = users.iterator();
-        System.out.println(userAuthDTO.getPassword());
+
         User user;
         while (iterator.hasNext()) {
             user = (User) iterator.next();
             if (user.getPassword().equals(userAuthDTO.getPassword()) && user.getUsername().equals(userAuthDTO.getUsername())) {
                 // I send user role in authentication header to setting special page in client side!
+
+                logger.fatal("Some body Logged in ..PPPP");
                 return Response.ok(createJWT(user.getUsername())).header("authentication",user.getRole().getName()).build();
             }
         }

@@ -26,10 +26,10 @@ public class UserCrudTest {
 
     @Test
     public void add() {
-        User user = new User("Hamed", "Abbaszadeh "
-                , "hamed", "1234", (Role) roleDAO.getById(1));
-        User user2 = new User("Sima", "Soheili "
-                , "Sima", "1234", (Role) roleDAO.getById(2));
+        User user = new User("Sina", "Taheri "
+                , "sina", "sina", (Role) roleDAO.getById(4));
+        User user2 = new User("Ahmad", "Soheili "
+                , "ahmad", "ahmad", (Role) roleDAO.getById(3));
         assertTrue(userDao.add(user));
         assertTrue(userDao.add(user2));
     }

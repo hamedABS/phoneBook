@@ -1,5 +1,7 @@
 package ir.maktab.model.role;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Set;
 
 /**
@@ -8,6 +10,7 @@ import java.util.Set;
 public class Role {
     private int id;
     private String name;
+    @JsonProperty
     private Set<Feature> features;
 
     public Role(String name, Set<Feature> features) {

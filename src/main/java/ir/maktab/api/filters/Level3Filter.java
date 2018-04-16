@@ -42,9 +42,16 @@ public class Level3Filter implements ContainerRequestFilter {
     public void filter(ContainerRequestContext requestContext) throws IOException {
 
         String authHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
-        String token = authHeader.substring(0).trim();
-        System.out.println(token);
-        validateToken(token ,requestContext);
+        try{
+            String token = authHeader.substring(0).trim();
+            validateToken(token ,requestContext);
+        }
+        catch (NullPointerException e){
+            requestContext.abortWith(
+                    Response.status(Response.Status.UNAUTHORIZED)
+                            .build());
+            return;
+        }
     }
 
     public void validateToken(String token ,ContainerRequestContext requestContext){

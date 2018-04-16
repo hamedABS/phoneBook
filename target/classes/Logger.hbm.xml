@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="ir.maktab.model.logger.MyLogger" table="logger">
+        <id name="id" column="id">
+            <generator class="native"/>
+        </id>
+        <property name="date" column="date" type="date"/>
+        <property name="task" column="task" type="string"/>
+        <property name="success" column="success" type="string"/>
+        <property name="whoLogging" column="whoLogging" type="string"/>
+    </class>
+</hibernate-mapping>

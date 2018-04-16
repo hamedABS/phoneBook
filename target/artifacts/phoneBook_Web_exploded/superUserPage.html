@@ -5,14 +5,19 @@
     <title>Title</title>
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/SUP.css">
-    <script src="jquery-3.2.1.min.js"></script>
+    <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/SupRequests.js"></script>
 </head>
 <body>
 <div class="row">
     <div class="col-md-6 col-sm-12">
         <div class="well" style="margin-top: 10px">
+            <div class="icon-container">
+                <img class="big-icon add-img-btn " src="icons/add.png">
+                <img class="big-icon add-done-img-btn " src="icons/done.png" style="display: none;">
+            </div>
             <table class="myTable">
+                <tbody>
                 <tr id="first_row">
                     <th>ردیف</th>
                     <th>نام</th>
@@ -22,13 +27,18 @@
                     <th>خانه</th>
                     <th>ویرایش</th>
                 </tr>
-                <tr id="last_row"></tr>
+                </tbody>
+
             </table>
         </div>
     </div>
     <div class="col-md-6 col-md-12">
         <div class="well" style="margin-top: 10px">
-            <table class="myTable" style="margin-right: 50px">
+            <div class="icon-container">
+
+                <img class="big-icon add-done-img-btn" src="icons/done.png" style="display: none;">
+            </div>
+            <table class="myTable">
                 <th>ردیف</th>
                 <th>نام</th>
                 <th>نام خانوادگی</th>

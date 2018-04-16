@@ -22,8 +22,10 @@ public class ContactPage extends javax.swing.JPanel {
 
     String serverIp ;
     String token;
-    public ContactPage(String serverIp,String token) {
+    String role ;
+    public ContactPage(String serverIp,String token,String role) {
         this.serverIp = serverIp;
+        this.role=role;
         this.token = token;
         initComponents();
         refreshTable();
@@ -39,6 +41,15 @@ public class ContactPage extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
         searchBtn = new javax.swing.JButton();
+
+        if(role.equals("User")){
+            deleteBtn.setEnabled(false);
+        }
+        else if(role.equals("Guest")){
+            addBtn.setEnabled(false);
+            editBtn.setEnabled(false);
+            deleteBtn.setEnabled(false);
+        }
         addBtn.setText("Add");
         addBtn.setToolTipText("addContact");
         addBtn.addActionListener(evt -> addBtnActionPerformed(evt));
